@@ -20,8 +20,14 @@ func main() {
 	ctx := context.Background()
 
 	// using WithCancel and cancel function
-	ctx, cancel := context.WithCancel(ctx)
-	time.AfterFunc(time.Second*3, cancel)
+	// ctx, cancel := context.WithCancel(ctx)
+	// time.AfterFunc(time.Second*3, cancel)
+
+	// ctx, cancel := context.WithDeadline(ctx, time.Now().Add(time.Second*4))
+	// defer cancel()
+
+	ctx, cancel := context.WithTimeout(ctx, time.Second*4)
+	defer cancel()
 
 	req, err := http.NewRequest("GET", "http://127.0.0.1:8080", nil)
 	if err != nil {
