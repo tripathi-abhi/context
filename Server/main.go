@@ -16,6 +16,16 @@ func main() {
 }
 
 func handleSayHey(w http.ResponseWriter, r *http.Request) {
-	time.Sleep(time.Second * 5)
-	fmt.Fprintf(w, "Hey handler said hey!")
+	ctx := r.Context()
+	fmt.Println("Request received!")
+
+	select {
+	case <-ctx.Done():
+		ctxErr := ctx.Err()
+		fmt.Println(ctxErr)
+		http.Error(w, ctxErr.Error(), http.StatusInternalServerError)
+	case <-time.After(time.Second * 5):
+		fmt.Println("Response sent!")
+		fmt.Fprintf(w, "SayHey handler said hey!")
+	}
 }
