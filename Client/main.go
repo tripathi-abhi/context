@@ -7,7 +7,7 @@ import (
 	"os"
 	"time"
 
-	context "github.com/tripathi-abhi/context_pkg/context"
+	context "github.com/tripathi-abhi/context_pkg/Context"
 )
 
 func main() {
